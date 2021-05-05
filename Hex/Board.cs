@@ -798,8 +798,11 @@ namespace Project_Hex
                     turnCounter++;
 
                     // computer move (Blue player == 2)
-                    if(!IsEnd)
+                    if(!IsEnd)              
                     {
+                        int maxI1 = 0;
+                        int maxI2 = 0;
+                        int maxV = int.MinValue;
                         int[,] bestMove = new int[boardSize, boardSize];
                         int freeCells = 0;
                         for (int i = 0; i < boardSize; i++)
@@ -821,6 +824,15 @@ namespace Project_Hex
                                 board[bestCells[i] / boardSize, bestCells[i] % boardSize].color = 2;
                                 bestMove[bestCells[i] / boardSize, bestCells[i] % boardSize] = MinMax(2, 1, depth, alpha, beta);
                                 board[bestCells[i] / boardSize, bestCells[i] % boardSize].color = 0;
+                            }                          
+                            for (int i = 0; i < 6; i++)
+                            {
+                                if (bestMove[bestCells[i] / boardSize, bestCells[i] % boardSize] > maxV)
+                                {
+                                    maxV = bestMove[bestCells[i] / boardSize, bestCells[i] % boardSize];
+                                    maxI1 = bestCells[i] / boardSize;
+                                    maxI2 = bestCells[i] % boardSize;
+                                }
                             }
                         }
                         else
@@ -837,22 +849,20 @@ namespace Project_Hex
                                     }
                                 }
                             }
-                        }                        
-                        int maxI1 = 0;
-                        int maxI2 = 0;
-                        int maxV = int.MinValue;
-                        for (int i = 0; i < boardSize; i++)
-                        {
-                            for (int j = 0; j < boardSize; j++)
+                            for (int i = 0; i < boardSize; i++)
                             {
-                                if (bestMove[i, j] > maxV)
+                                for (int j = 0; j < boardSize; j++)
                                 {
-                                    maxV = bestMove[i, j];
-                                    maxI1 = i;
-                                    maxI2 = j;
+                                    if (bestMove[i, j] > maxV)
+                                    {
+                                        maxV = bestMove[i, j];
+                                        maxI1 = i;
+                                        maxI2 = j;
+                                    }
                                 }
                             }
-                        }
+                        }                                              
+                       
                         //Console.WriteLine(maxI1 + " " + maxI2);
                         board[maxI1, maxI2].color = 2;
                         board[maxI1, maxI2].BackColor = Color.Blue;
@@ -875,6 +885,9 @@ namespace Project_Hex
                     // computer move (Red player == 1)
                     if(!IsEnd)
                     {
+                        int maxI1 = 0;
+                        int maxI2 = 0;
+                        int maxV = int.MinValue;
                         int[,] bestMove = new int[boardSize, boardSize];
                         int freeCells = 0;
                         for (int i = 0; i < boardSize; i++)
@@ -897,6 +910,15 @@ namespace Project_Hex
                                 bestMove[bestCells[i] / boardSize, bestCells[i] % boardSize] = MinMax(1, 2, depth, alpha, beta); 
                                 board[bestCells[i] / boardSize, bestCells[i] % boardSize].color = 0;
                             }
+                            for (int i = 0; i < 6; i++)
+                            {
+                                if (bestMove[bestCells[i] / boardSize, bestCells[i] % boardSize] > maxV)
+                                {
+                                    maxV = bestMove[bestCells[i] / boardSize, bestCells[i] % boardSize];
+                                    maxI1 = bestCells[i] / boardSize;
+                                    maxI2 = bestCells[i] % boardSize;
+                                }
+                            }
                         }
                         else
                         {
@@ -912,22 +934,19 @@ namespace Project_Hex
                                     }
                                 }
                             }
-                        }                       
-                        int maxI1 = 0;
-                        int maxI2 = 0;
-                        int maxV = int.MinValue;
-                        for (int i = 0; i < boardSize; i++)
-                        {
-                            for (int j = 0; j < boardSize; j++)
+                            for (int i = 0; i < boardSize; i++)
                             {
-                                if (bestMove[i, j] > maxV)
+                                for (int j = 0; j < boardSize; j++)
                                 {
-                                    maxV = bestMove[i, j];
-                                    maxI1 = i;
-                                    maxI2 = j;
+                                    if (bestMove[i, j] > maxV)
+                                    {
+                                        maxV = bestMove[i, j];
+                                        maxI1 = i;
+                                        maxI2 = j;
+                                    }
                                 }
                             }
-                        }
+                        }                                             
                         board[maxI1, maxI2].color = 1;
                         board[maxI1, maxI2].BackColor = Color.Red;
                         if (IsWinner(1))
@@ -957,6 +976,9 @@ namespace Project_Hex
             if(turnCounter % 2 == 0)
             {
                 // computer move
+                int maxI1 = 0;
+                int maxI2 = 0;
+                int maxV = int.MinValue;
                 int[,] bestMove = new int[boardSize, boardSize];
                 int freeCells = 0;
                 for (int i = 0; i < boardSize; i++)
@@ -979,6 +1001,15 @@ namespace Project_Hex
                         bestMove[bestCells[i] / boardSize, bestCells[i] % boardSize] = MinMax(1, 2, depth, alpha, beta);
                         board[bestCells[i] / boardSize, bestCells[i] % boardSize].color = 0;
                     }
+                    for (int i = 0; i < 6; i++)
+                    {
+                        if (bestMove[bestCells[i] / boardSize, bestCells[i] % boardSize] > maxV)
+                        {
+                            maxV = bestMove[bestCells[i] / boardSize, bestCells[i] % boardSize];
+                            maxI1 = bestCells[i] / boardSize;
+                            maxI2 = bestCells[i] % boardSize;
+                        }
+                    }
                 }
                 else
                 {
@@ -994,22 +1025,19 @@ namespace Project_Hex
                             }
                         }
                     }
-                }               
-                int maxI1 = 0;
-                int maxI2 = 0;
-                int maxV = int.MinValue;
-                for (int i = 0; i < boardSize; i++)
-                {
-                    for (int j = 0; j < boardSize; j++)
+                    for (int i = 0; i < boardSize; i++)
                     {
-                        if (bestMove[i, j] > maxV)
+                        for (int j = 0; j < boardSize; j++)
                         {
-                            maxV = bestMove[i, j];
-                            maxI1 = i;
-                            maxI2 = j;
+                            if (bestMove[i, j] > maxV)
+                            {
+                                maxV = bestMove[i, j];
+                                maxI1 = i;
+                                maxI2 = j;
+                            }
                         }
                     }
-                }
+                }                                            
                 board[maxI1, maxI2].color = 1;
                 board[maxI1, maxI2].BackColor = Color.Red;
                 if (IsWinner(1))
